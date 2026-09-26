@@ -255,6 +255,30 @@ main > p {
     }
 }
 
+/* PÁGINA DE INICIO */
+
+.descripcion-tarjeta {
+    font-size: 15px !important;
+    font-weight: normal !important;
+    color: #6c757d !important;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.boton-link {
+    display: inline-block;
+    background-color: #1e3a5f;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.boton-link:hover {
+    background-color: #2f5d8a;
+}
 
 @media (max-width: 500px) {
 
