@@ -59,9 +59,13 @@ function mostrarTareas() {
             <td>${tarea.usuario}</td>
             <td>${tarea.fecha}</td>
             <td>${estado}</td>
-            <td>
+           <td>
                 <button onclick="editarTarea(${tarea.id})">
                     Editar
+                </button>
+
+                <button onclick="eliminarTarea(${tarea.id})">
+                    Eliminar
                 </button>
             </td>
         `;
@@ -95,6 +99,29 @@ function editarTarea(id) {
         top: 0,
         behavior: "smooth"
     });
+}
+
+function eliminarTarea(id) {
+
+    const confirmar = confirm(
+        "¿Está seguro de que desea eliminar esta tarea?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    let tareas = obtenerTareas();
+
+    tareas = tareas.filter(function (tarea) {
+        return tarea.id !== id;
+    });
+
+    guardarTareas(tareas);
+
+    mostrarTareas();
+
+    alert("Tarea eliminada correctamente");
 }
 
 formularioTarea.addEventListener("submit", function (event) {
