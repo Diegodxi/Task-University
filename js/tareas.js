@@ -67,6 +67,9 @@ function mostrarTareas() {
                 <button onclick="eliminarTarea(${tarea.id})">
                     Eliminar
                 </button>
+                <button onclick="cambiarEstadoTarea(${tarea.id})">
+                    ${tarea.completada ? "Marcar pendiente" : "Completar"}
+                </button>
             </td>
         `;
 
@@ -122,6 +125,31 @@ function eliminarTarea(id) {
     mostrarTareas();
 
     alert("Tarea eliminada correctamente");
+}
+
+function cambiarEstadoTarea(id) {
+
+    const tareas = obtenerTareas();
+
+    const tarea = tareas.find(function (tarea) {
+        return tarea.id === id;
+    });
+
+    if (!tarea) {
+        return;
+    }
+
+    tarea.completada = !tarea.completada;
+
+    guardarTareas(tareas);
+
+    mostrarTareas();
+
+    if (tarea.completada) {
+        alert("Tarea marcada como completada");
+    } else {
+        alert("Tarea marcada como pendiente");
+    }
 }
 
 formularioTarea.addEventListener("submit", function (event) {
