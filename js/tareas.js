@@ -2,6 +2,8 @@ const formularioTarea = document.getElementById("formTarea");
 const selectUsuario = document.getElementById("usuario");
 const listaTareas = document.getElementById("listaTareas");
 
+let tareaEditandoId = null;
+
 function obtenerTareas() {
     return JSON.parse(localStorage.getItem("tareas")) || [];
 }
@@ -58,11 +60,40 @@ function mostrarTareas() {
             <td>${tarea.fecha}</td>
             <td>${estado}</td>
             <td>
-                Próximamente
+                <button onclick="editarTarea(${tarea.id})">
+                    Editar
+                </button>
             </td>
         `;
 
         listaTareas.appendChild(fila);
+    });
+}
+
+function editarTarea(id) {
+    const tareas = obtenerTareas();
+
+    const tarea = tareas.find(function (tarea) {
+        return tarea.id === id;
+    });
+
+    if (!tarea) {
+        return;
+    }
+
+    document.getElementById("titulo").value = tarea.titulo;
+    document.getElementById("descripcion").value = tarea.descripcion;
+    document.getElementById("usuario").value = tarea.usuario;
+    document.getElementById("fecha").value = tarea.fecha;
+
+    tareaEditandoId = id;
+
+    formularioTarea.querySelector("button[type='submit']").textContent =
+        "Guardar cambios";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
 }
 
@@ -81,24 +112,47 @@ formularioTarea.addEventListener("submit", function (event) {
 
     const tareas = obtenerTareas();
 
-    const nuevaTarea = {
-        id: Date.now(),
-        titulo: titulo,
-        descripcion: descripcion,
-        usuario: usuario,
-        fecha: fecha,
-        completada: false
-    };
+    if (tareaEditandoId === null) {
 
-    tareas.push(nuevaTarea);
+        const nuevaTarea = {
+            id: Date.now(),
+            titulo: titulo,
+            descripcion: descripcion,
+            usuario: usuario,
+            fecha: fecha,
+            completada: false
+        };
+
+        tareas.push(nuevaTarea);
+
+        alert("Tarea registrada correctamente");
+
+    } else {
+
+        const indice = tareas.findIndex(function (tarea) {
+            return tarea.id === tareaEditandoId;
+        });
+
+        if (indice !== -1) {
+            tareas[indice].titulo = titulo;
+            tareas[indice].descripcion = descripcion;
+            tareas[indice].usuario = usuario;
+            tareas[indice].fecha = fecha;
+        }
+
+        tareaEditandoId = null;
+
+        formularioTarea.querySelector("button[type='submit']").textContent =
+            "Registrar tarea";
+
+        alert("Tarea actualizada correctamente");
+    }
 
     guardarTareas(tareas);
 
     formularioTarea.reset();
 
     mostrarTareas();
-
-    alert("Tarea registrada correctamente");
 });
 
 cargarUsuarios();
