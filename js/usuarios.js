@@ -47,11 +47,35 @@ formularioUsuario.addEventListener("submit", function (event) {
 
     event.preventDefault();
 
-    const nombre = document.getElementById("nombre").value;
-    const correo = document.getElementById("correo").value;
-    const carrera = document.getElementById("carrera").value;
+    const nombre = document.getElementById("nombre").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+    const carrera = document.getElementById("carrera").value.trim();
+
+    if (nombre === "" || correo === "" || carrera === "") {
+        alert("Todos los campos son obligatorios.");
+        return;
+    }
+
+    if (nombre.length < 3) {
+        alert("El nombre debe tener al menos 3 caracteres.");
+        return;
+    }
+
+    if (!correo.includes("@") || !correo.includes(".")) {
+        alert("Ingrese un correo electrónico válido.");
+        return;
+    }
 
     const usuarios = obtenerUsuarios();
+
+    const correoExiste = usuarios.some(function (usuario) {
+        return usuario.correo.toLowerCase() === correo.toLowerCase();
+    });
+
+    if (correoExiste) {
+        alert("Ya existe un usuario registrado con ese correo.");
+        return;
+    }
 
     const nuevoUsuario = {
         id: Date.now(),
@@ -70,6 +94,5 @@ formularioUsuario.addEventListener("submit", function (event) {
 
     alert("Usuario registrado correctamente");
 });
-
 
 mostrarUsuarios();
