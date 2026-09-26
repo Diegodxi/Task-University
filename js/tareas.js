@@ -1,5 +1,6 @@
 const formularioTarea = document.getElementById("formTarea");
 const selectUsuario = document.getElementById("usuario");
+const listaTareas = document.getElementById("listaTareas");
 
 function obtenerTareas() {
     return JSON.parse(localStorage.getItem("tareas")) || [];
@@ -10,7 +11,6 @@ function guardarTareas(tareas) {
 }
 
 function cargarUsuarios() {
-
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
     selectUsuario.innerHTML = `
@@ -20,7 +20,6 @@ function cargarUsuarios() {
     `;
 
     usuarios.forEach(function (usuario) {
-
         const opcion = document.createElement("option");
 
         opcion.value = usuario.nombre;
@@ -30,9 +29,44 @@ function cargarUsuarios() {
     });
 }
 
+function mostrarTareas() {
+    const tareas = obtenerTareas();
+
+    listaTareas.innerHTML = "";
+
+    if (tareas.length === 0) {
+        listaTareas.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    No existen tareas registradas.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    tareas.forEach(function (tarea) {
+        const fila = document.createElement("tr");
+
+        const estado = tarea.completada ? "Completada" : "Pendiente";
+
+        fila.innerHTML = `
+            <td>${tarea.titulo}</td>
+            <td>${tarea.descripcion}</td>
+            <td>${tarea.usuario}</td>
+            <td>${tarea.fecha}</td>
+            <td>${estado}</td>
+            <td>
+                Próximamente
+            </td>
+        `;
+
+        listaTareas.appendChild(fila);
+    });
+}
 
 formularioTarea.addEventListener("submit", function (event) {
-
     event.preventDefault();
 
     const titulo = document.getElementById("titulo").value.trim();
@@ -62,8 +96,10 @@ formularioTarea.addEventListener("submit", function (event) {
 
     formularioTarea.reset();
 
+    mostrarTareas();
+
     alert("Tarea registrada correctamente");
 });
 
-
 cargarUsuarios();
+mostrarTareas();
