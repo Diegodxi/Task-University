@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tareas | Task University</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Task University</h1>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="usuarios.html">Usuarios</a>
+            <a href="tareas.html">Tareas</a>
+            <a href="dashboard.html">Dashboard</a>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <section class="contenedor">
+
+            <h2>Gestión de Tareas</h2>
+
+            <p>Registra y administra tus tareas académicas.</p>
+
+            <form id="formTarea">
+
+                <div class="campo">
+
+                    <label for="titulo">Título</label>
+
+                    <input
+                        type="text"
+                        id="titulo"
+                        placeholder="Ingrese el título de la tarea"
+                        required>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="descripcion">Descripción</label>
+
+                    <textarea
+                        id="descripcion"
+                        placeholder="Ingrese una descripción"
+                        required>
+                    </textarea>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="usuario">Usuario responsable</label>
+
+                    <select id="usuario" required>
+
+                        <option value="">
+                            Seleccione un usuario
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="fecha">Fecha límite</label>
+
+                    <input
+                        type="date"
+                        id="fecha"
+                        required>
+
+                </div>
+
+                <button type="submit">
+                    Registrar tarea
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <section class="contenedor">
+
+            <h2>Tareas Registradas</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="listaTareas">
+
+                    <tr>
+                        <td colspan="6">
+                            No existen tareas registradas.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+    <script src="js/tareas.js"></script>
+
+</body>
+
+</html>
